@@ -1,60 +1,26 @@
-#CentOS 7 Blank VMs
+#Vagrant Ruby Development
 
-This vagrant file sets up three vanilla CentOS 7 vms to use for testing.
+wget https://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz
 
-To change vagrant boxes search for a new Vagrant box on:
+yum install make gcc gcc-c++ -y
+tar -xvzf ruby-2.2.3.tar.gz
+cd ruby-2.2.3
+./configure
+make
+make install
 
-https://atlas.hashicorp.com/boxes/search?utf8=%E2%9C%93&sort=&provider=&q=
+wget https://rubygems.org/rubygems/rubygems-2.5.0.tgz
+tar -xvzf rubygems-2.5.0.tgz
+ruby setup.rb
 
-Then change agent2.vm.box = "centos/7" to reflect the box you chose.
 
-#Getting Started
+yum install ruby rubygems -y
+yum install nodejs
+gem install jekyll
 
-##Requirements
 
-###Install Vagrant
-- https://www.vagrantup.com/downloads.html
-
-###Install VirtualBox
-- https://www.virtualbox.org/wiki/Downloads
-
-###Install Cygwin
-- https://cygwin.com/install.html
-
-####Cygwin Packages Needed
-- tar
-- rsync
-- git
-- bzip2
-- mysql (client not server)
-- scp
-- sftp
-
-##Clone Repository
-```
-git clone https://github.com/travmi/vagrant-centos7.git
-```
-
-##Start VMs
-
-###Starting all three VMs
-cd vagrant-centos7
-
-```
-vagrant up
-```
-
-##Starting Single VM
-cd vagrant-centos7
-
-```
-vagrant up agent1
-```
-
-##Login
-Check the Vagrant file for the IPs associated with each VM.
-
-Using Cygwin - Password = vagrant
-```
-ssh root@172.16.90.5
-```
+severspec
+gem install rake
+gem install serverspec
+serverspec-init
+rake spec

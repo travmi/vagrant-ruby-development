@@ -24,11 +24,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ruby1.vm.box = "geerlingguy/centos7"
     ruby1.vm.hostname = "ruby1"
     ruby1.vm.network :private_network, ip: "172.16.92.5"
-    ruby1.vm.synced_folder "ruby", "/root/ruby"
+    ruby1.vm.synced_folder "ruby", "/var/www"
     ruby1.vm.provider "virtualbox" do |vb|
      vb.customize ["modifyvm", :id, "--memory", "512"]
      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
+    ruby1.vm.provision "shell", inline: "yum install nginx -y; cp /vagrant/configs/blog.conf /etc/nginx/conf.d/blog.conf; rm -rf /etc/nginx/nginx.conf; cp /vagrant/configs/nginx.conf /etc/nginx/nginx.conf; systemctl restart nginx"
   end
 
  config.vm.define "ruby2" do |ruby2|
